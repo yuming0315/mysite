@@ -27,7 +27,7 @@ public class UpdateFormAction implements Action {
 			return;
 		}
 		
-		 UserVo vo = new UserDao().update(authUser.getNo(),request.getParameter("name"),request.getParameter("password"),request.getParameter("gender"));
+		UserVo vo = new UserDao().update(authUser.getNo(),request.getParameter("name"),request.getParameter("password"),request.getParameter("gender"));
 		
 		session.setAttribute("authUser", vo);
 		WebUtil.forward("user/updateform", request, response);

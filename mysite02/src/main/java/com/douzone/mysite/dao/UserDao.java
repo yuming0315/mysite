@@ -53,7 +53,7 @@ public class UserDao {
 		
 		try {
 			conn = getConnection();
-			String sql ="select no, name from user where email=? and password = password(?)";
+			String sql ="select no, name, gender from user where email=? and password = password(?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, vo.getEmail());
@@ -65,9 +65,11 @@ public class UserDao {
 				result = new UserVo();
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
+				String gender = rs.getString(3);
 				
 				result.setNo(no);
 				result.setName(name);
+				result.setGender(gender);
 			}
 			
 		} catch (SQLException e) {
