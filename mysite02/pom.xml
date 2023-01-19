@@ -14,6 +14,12 @@
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 	<dependencies>
+		<!-- jstl -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- mariadb -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
