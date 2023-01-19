@@ -23,7 +23,7 @@ public class GuestBookInsertAction implements Action {
 		
 		new GuestBookDao().insert(vo);
 		
-		response.sendRedirect(request.getContextPath()+"/guestbook?a=list");
+		WebUtil.redirect(request.getContextPath()+"/guestbook?a=list", request, response);
 	}
 
 }
