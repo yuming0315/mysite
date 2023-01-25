@@ -72,7 +72,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>BoardController</servlet-name>
-    <url-pattern>/bc</url-pattern>
+    <url-pattern>/board</url-pattern>
   </servlet-mapping>
  
 </web-app>
