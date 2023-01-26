@@ -8,10 +8,18 @@ public class BoardVo {
 	private String title;
 	private String content;
 	private Long hit;
-	private Date regDate;
+	private String regDate;
 	private Long g_no=0L;
 	private Long o_no;
 	private Long depth;
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public Long getNo() {
 		return no;
 	}
@@ -42,10 +50,10 @@ public class BoardVo {
 	public void setHit(Long hit) {
 		this.hit = hit;
 	}
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 	public Long getG_no() {

@@ -31,7 +31,7 @@ public class WriteAction implements Action {
 		
 		new BoardDao().insert(vo);
 		
-		WebUtil.forward("board/list", request, response);
+		response.sendRedirect("/mysite02/board?page="+request.getParameter("page")+"&offset="+request.getParameter("offset"));
 	}
 
 }
