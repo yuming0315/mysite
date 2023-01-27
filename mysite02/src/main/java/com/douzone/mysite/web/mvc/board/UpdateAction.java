@@ -11,27 +11,21 @@ import com.douzone.mysite.dao.BoardDao;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.mvc.Action;
-import com.douzone.web.util.WebUtil;
 
-public class WriteAction implements Action {
+public class UpdateAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			WebUtil.redirect(request.getContextPath(), request, response);
-			return;
-		}
-		
 		BoardVo vo = new BoardVo();
-		vo.setUser_no(authUser.getNo());
+		HttpSession session = request.getSession(true);
+		vo.setUser_no(((UserVo) session.getAttribute("authUser")).getNo());
 		vo.setTitle(request.getParameter("title"));
 		vo.setContent(request.getParameter("content"));
+		vo.setNo(Long.parseLong(request.getParameter("no")));
 		
-		new BoardDao().insert(vo);
+		new BoardDao().update(vo);
 		
-		response.sendRedirect("/mysite02/board?a=view&no="+new BoardDao().newBoardNo(vo)+"&page=1"+
+		response.sendRedirect("/mysite02/board?a=view&no="+vo.getNo()+"&page="+request.getParameter("page")+
 				"&offset="+request.getParameter("offset"));
 	}
 

@@ -17,18 +17,18 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Object obj = request.getAttribute("page");
-		PageVo page =(PageVo) (obj==null ? new PageVo() : obj) ;
+		Object obj = request.getAttribute("pager");
+		PageVo pager =(PageVo) (obj==null ? new PageVo() : obj) ;
 
-		page.setPage(request.getParameter("page"));
-		page.setOffset(request.getParameter("offset"));
+		pager.setPage(request.getParameter("page"));
+		pager.setOffset(request.getParameter("offset"));
 		
-		page.setPages(new BoardDao().boardCount());
-		page.addPage(request.getParameter("move"));
+		pager.setPages(new BoardDao().boardCount());
+		pager.addPage(request.getParameter("move"));
 		
-		List<BoardVo> list = new BoardDao().findAll(page);
+		List<BoardVo> list = new BoardDao().findAll(pager);
 		request.setAttribute("list", list);
-		request.setAttribute("page", page);
+		request.setAttribute("pager", pager);
 		
 		WebUtil.forward("board/list", request, response);
 	}

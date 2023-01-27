@@ -10,6 +10,13 @@ select no,name,email,gender from user where no = ?;
 
 delete from user where name = 0;
 
+
+
+
+
+
+
+
 desc board;
 
 select * from board;
@@ -24,6 +31,17 @@ insert into board value(null,3,'1234','1234',0,sysdate(),(select max(a.g_no)+1 f
 
 select null,3,'1','1234',0,sysdate(),max(a.g_no)+1,0,0 
 from board as a;
+
+update board set title='yum' where no=1;
+
+delete from board where title="qwer";
+
+
+
+
+
+
+
 
 SET GLOBAL time_zone='+09:00';
 SET time_zone='+09:00';
