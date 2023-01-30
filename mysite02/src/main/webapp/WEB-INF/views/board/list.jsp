@@ -32,7 +32,7 @@
 						<option value="b.name">저자</option>
 					</select> <input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
-						
+
 					<table class="tbl-ex">
 						<tr>
 							<th>번호</th>
@@ -64,7 +64,7 @@
 						</c:forEach>
 					</table>
 					<c:set var="begin"
-						value="${page >= 3 ? (page+2 < pages ? page-2 : pages-4 ) : 1 }" />
+						value="${page > 3 ? (page+2 <= pages ? page-2 : pages-4 ) : 1 }" />
 					<c:set var="end"
 						value="${page < 3 ? (pages<5 ? pages : 5) : (page + 2 > pages ? pages : page+2 ) }" />
 
@@ -82,9 +82,11 @@
 								</c:forEach>
 							</select>
 							<li><a href="${link }&move=-1">◀</a></li>
-							<c:forEach begin="${begin}" end="${end  }" step="1" var="i">
-								<li ${i == page ? 'class="selected"':"" }><a
-									href="${alink }&page=${i}">${i }</a></li>
+							<c:forEach begin="${begin}" end="${end }" step="1" var="i">
+								<c:if test="${i>0 }">
+									<li ${i == page ? 'class="selected"':"" }><a
+										href="${alink }&page=${i}">${i }</a></li>
+								</c:if>
 							</c:forEach>
 							<li><a href="${link }&move=1">▶</a></li>
 						</ul>
