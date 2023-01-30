@@ -239,7 +239,64 @@ public class BoardDao {
 		}		
 		return vo;
 	}
-	
+	public List<BoardVo> findKwd(String kwdOption, String kwd, String offset) {
+		List<BoardVo> result = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+
+			String sql = "select a.no,a.user_no,a.title,a.hit,a.reg_date,b.name, a.g_no, a.o_no, a.depth from board a join user b on b.no=a.user_no"
+					+ " where "+kwdOption+" like ?"
+					+ " order by g_no desc, o_no asc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+
+			Long o = Long.parseLong(offset);
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setLong(2, 0L);
+			pstmt.setLong(3, o);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				BoardVo vo = new BoardVo();
+				vo.setNo(rs.getLong(1));
+				vo.setUser_no(rs.getLong(2));
+				vo.setTitle(rs.getString(3));
+				vo.setHit(rs.getLong(4));
+				vo.setRegDate(rs.getString(5));
+				vo.setName(rs.getString(6));
+				vo.setG_no(rs.getLong(7));
+				vo.setO_no(rs.getLong(8));
+				vo.setDepth(rs.getLong(9));
+				
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
 	
 	public List<BoardVo> findAll(PageVo page) {//다불러올 필요 없이 글 리스트 출력에 필요한 데이터만
 		List<BoardVo> result = new ArrayList<>();

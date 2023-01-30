@@ -27,6 +27,7 @@ public class ViewAction implements Action {
 				notCookie = false;
 				if (!cookie.getValue().contains(number+":c")) {
 				//조회 한 적이 없다면! 쿠키에 값 추가하고 조회수+1
+					cookie.setMaxAge(60*60*2);
 					cookie.setValue(cookie.getValue()+number+":c");
 					response.addCookie(cookie);//값을 변경한 쿠키를 다시 추가해줘야함
 					new BoardDao().updateHit(no);

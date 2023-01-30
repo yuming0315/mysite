@@ -16,76 +16,88 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value=""> <input
-						type="submit" value="찾기">
-				</form>
 				<c:set var="page" value="${requestScope.pager.page }" />
 				<c:set var="offset" value="${requestScope.pager.offset }" />
 				<c:set var="pages" value="${requestScope.pager.pages }" />
 				<c:set var="alink"
 					value="${pageContext.request.contextPath }/board?offset=${offset }" />
 				<c:set var="link" value="${alink }&page=${page }" />
-				<table class="tbl-ex">
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>글쓴이</th>
-						<th>조회수</th>
-						<th>작성일</th>
-						<th>&nbsp;</th>
-					</tr>
-					<c:forEach items="${requestScope.list }" var="vo"
-						varStatus="status">
+				<form id="search_form"
+					action="${pageContext.request.contextPath }/board" method="post">
+					<input type="hidden" id="a" name="a" value="kwd"> <input
+						type="hidden" id="page" name="page" value="${page }"> <select
+						id="kwdOption" name="kwdOption" size="1">
+						<option value="title">제목</option>
+						<option value="contents">내용</option>
+						<option value="b.name">저자</option>
+					</select> <input type="text" id="kwd" name="kwd" value=""> <input
+						type="submit" value="찾기">
+						
+					<table class="tbl-ex">
 						<tr>
-							<td>${vo.no }</td>
-							<td style="text-align: left; padding-left: ${vo.depth * 5}px">
-								<c:if test="${vo.depth > 0 }">
-									<img
-										src="${pageContext.request.contextPath }/assets/images/reply.png">
-								</c:if> <a
-								href="${link }&a=view&no=${vo.no }">${vo.title }</a>
-							</td>
-							<td>${vo.name }</td>
-							<td>${vo.hit }</td>
-							<td>${vo.regDate }</td>
-							<td><c:if
-										test="${vo.user_no == authUser.no }"><a href="${link }&a=delete&no=${vo.no }" class="del"> 
-										<img
-											src="${pageContext.request.contextPath }/assets/images/recycle.png">
-									</a></c:if></td>
+							<th>번호</th>
+							<th>제목</th>
+							<th>글쓴이</th>
+							<th>조회수</th>
+							<th>작성일</th>
+							<th>&nbsp;</th>
 						</tr>
-					</c:forEach>
-				</table>
-
-				
-
-				<c:set var="begin"
-					value="${page >= 3 ? (page+2 < pages ? page-2 : pages-4 ) : 1 }" />
-				<c:set var="end"
-					value="${page < 3 ? (pages<5 ? pages : 5) : (page + 2 > pages ? pages : page+2 ) }" />
-
-				<!-- pager 추가 -->
-				<div class="pager">
-					<ul>
-						<li><a href="${link }&move=-1">◀</a></li>
-						<c:forEach begin="${begin}" end="${end  }" step="1" var="i">
-							<li ${i == page ? 'class="selected"':"" }><a
-								href="${alink }&page=${i}">${i }</a></li>
+						<c:forEach items="${requestScope.list }" var="vo"
+							varStatus="status">
+							<tr>
+								<td>${vo.no }</td>
+								<td style="text-align: left; padding-left: ${vo.depth * 5}px">
+									<c:if test="${vo.depth > 0 }">
+										<img
+											src="${pageContext.request.contextPath }/assets/images/reply.png">
+									</c:if> <a href="${link }&a=view&no=${vo.no }">${vo.title }</a>
+								</td>
+								<td>${vo.name }</td>
+								<td>${vo.hit }</td>
+								<td>${vo.regDate }</td>
+								<td><c:if test="${vo.user_no == authUser.no }">
+										<a href="${link }&a=delete&no=${vo.no }" class="del"> <img
+											src="${pageContext.request.contextPath }/assets/images/recycle.png">
+										</a>
+									</c:if></td>
+							</tr>
 						</c:forEach>
-						<li><a href="${link }&move=1">▶</a></li>
-					</ul>
-				</div>
-				<!-- pager 추가 -->
+					</table>
+					<c:set var="begin"
+						value="${page >= 3 ? (page+2 < pages ? page-2 : pages-4 ) : 1 }" />
+					<c:set var="end"
+						value="${page < 3 ? (pages<5 ? pages : 5) : (page + 2 > pages ? pages : page+2 ) }" />
 
-				<c:if test="${not empty authUser }">
-					<div class="bottom">
-						<a
-							href="${pageContext.request.contextPath }/board?a=new-book&page=${page }&offset=${offset}"
-							id="new-book">글쓰기</a>
+
+					<!-- pager 추가 -->
+					<div class="pager">
+						<ul>
+							<select onchange="this.form.submit()" id="offset" name="offset"
+								size="1">
+								<option value="${offset }">${offset }</option>
+								<c:forEach begin="5" end="10" step="1" var="i">
+									<c:if test="${i!=offset }">
+										<option value="${i }">${i }</option>
+									</c:if>
+								</c:forEach>
+							</select>
+							<li><a href="${link }&move=-1">◀</a></li>
+							<c:forEach begin="${begin}" end="${end  }" step="1" var="i">
+								<li ${i == page ? 'class="selected"':"" }><a
+									href="${alink }&page=${i}">${i }</a></li>
+							</c:forEach>
+							<li><a href="${link }&move=1">▶</a></li>
+						</ul>
 					</div>
-				</c:if>
 
+					<c:if test="${not empty authUser }">
+						<div class="bottom">
+							<a
+								href="${pageContext.request.contextPath }/board?a=new-book&page=${page }&offset=${offset}"
+								id="new-book">글쓰기</a>
+						</div>
+					</c:if>
+				</form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />

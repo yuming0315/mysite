@@ -25,6 +25,8 @@ public class BoardActionFactory extends ActionFactory {
 			action = new ReplyFormAction();
 		}else if("delete".equals(actionName)) {
 			action = new DeleteAction();
+		}else if("kwd".equals(actionName)) {
+			action = new KwdAction();
 		}else {
 			action = new ListAction();
 		}

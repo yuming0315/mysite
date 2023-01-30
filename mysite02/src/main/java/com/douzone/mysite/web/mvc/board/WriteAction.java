@@ -23,7 +23,6 @@ public class WriteAction implements Action {
 			WebUtil.redirect(request.getContextPath(), request, response);
 			return;
 		}
-		
 		BoardVo vo = new BoardVo();
 		vo.setUser_no(authUser.getNo());
 		vo.setTitle(request.getParameter("title"));
