@@ -77,7 +77,7 @@
 								</c:forEach>
 							</select>
 							<li><a href="${link }&move=-1">◀</a></li>
-							<c:forEach begin="${begin}" end="${end }" step="1" var="i">
+							<c:forEach begin="${requestScope.pager.end - 4}" end="${requestScope.pager.end }" step="1" var="i">
 								<c:if test="${i>0 }">
 									<li ${i == page ? 'class="selected"':"" }><a
 										href="${alink }&page=${i}">${i }</a></li>

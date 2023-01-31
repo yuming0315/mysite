@@ -20,7 +20,7 @@ public class ListAction implements Action {
 		Object obj = request.getAttribute("pager");
 		PageVo pager =(PageVo) (obj==null ? new PageVo() : obj) ;
 
-		obj = request.getAttribute("search");
+//		obj = request.getAttribute("search");
 		System.out.println(obj);
 		
 		pager.setPage(request.getParameter("page"));
@@ -29,7 +29,7 @@ public class ListAction implements Action {
 		pager.setPages(new BoardDao().boardCount());
 		pager.addPage(request.getParameter("move"));
 		
-		List<BoardVo> list = (List<BoardVo>) (obj==null ? new BoardDao().findAll(pager):obj);
+		List<BoardVo> list = new BoardDao().findAll(pager);
 		request.setAttribute("list", list);
 		request.setAttribute("pager", pager);
 		
