@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.UserRepositoryException;
 import com.douzone.mysite.vo.UserVo;
 
 @Repository
@@ -54,7 +55,7 @@ public class UserRepository {
 		
 		try {
 			conn = getConnection();
-			String sql ="select no, name, gender from user where email=? and password = password(?)";
+			String sql ="elect no, name, gender from user where email=? and password = password(?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, vo.getEmail());
@@ -74,7 +75,7 @@ public class UserRepository {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException(e.toString());
 		} finally {
 			try {
 				if(pstmt != null) {
@@ -140,27 +141,26 @@ public class UserRepository {
 		return result;
 	}
 	
-	public UserVo update(Long no, String name, String password, String gender) {
+	public void update(UserVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		if(!"".equals(name)&&name!=null) {
+		if(!"".equals(vo.getName())&&vo.getName()!=null) {
 			try {
-				System.out.println(1234);
 				conn = getConnection();
 				String sql ="update user set name = ? , gender = ? " 
-							+("".equals(password)||password==null ? "" : ", password = password( ? )" )
+							+("".equals(vo.getPassword())||vo.getPassword()==null ? "" : ", password = password( ? )" )
 							+" where no = ?";
 				pstmt = conn.prepareStatement(sql);
 				
-				pstmt.setString(1, name);
-				pstmt.setString(2, gender);
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getGender());
 				
-				if("".equals(password)||password==null) {
-					pstmt.setLong(3, no);
+				if("".equals(vo.getPassword())||vo.getPassword()==null) {
+					pstmt.setLong(3, vo.getNo());
 				}
 				else {
-					pstmt.setString(3, password);
-					pstmt.setLong(4, no);
+					pstmt.setString(3, vo.getPassword());
+					pstmt.setLong(4, vo.getNo());
 				}
 				
 				pstmt.executeUpdate();
@@ -180,8 +180,6 @@ public class UserRepository {
 				}
 			}
 		}
-		System.out.println(name+" "+password+" "+gender);
-		return findByNo(no);
 		
 	}
 	
