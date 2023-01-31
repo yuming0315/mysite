@@ -63,11 +63,6 @@
 							</tr>
 						</c:forEach>
 					</table>
-					<c:set var="begin"
-						value="${page > 3 ? (page+2 <= pages ? page-2 : pages-4 ) : 1 }" />
-					<c:set var="end"
-						value="${page < 3 ? (pages<5 ? pages : 5) : (page + 2 > pages ? pages : page+2 ) }" />
-
 
 					<!-- pager 추가 -->
 					<div class="pager">
