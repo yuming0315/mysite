@@ -144,7 +144,6 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 		if(!"".equals(name)&&name!=null) {
 			try {
-				System.out.println(1234);
 				conn = getConnection();
 				String sql ="update user set name = ? , gender = ? " 
 							+("".equals(password)||password==null ? "" : ", password = password( ? )" )
@@ -179,7 +178,6 @@ public class UserDao {
 				}
 			}
 		}
-		System.out.println(name+" "+password+" "+gender);
 		return findByNo(no);
 		
 	}
