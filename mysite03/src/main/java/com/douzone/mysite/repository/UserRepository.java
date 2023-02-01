@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.exception.UserRepositoryException;
@@ -13,7 +17,12 @@ import com.douzone.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
-
+	@Autowired
+	private DataSource dataSource;
+	//하나당 autowired 하나씩
+	@Autowired
+	private SqlSession sqlSession;
+	
 	public void insert(UserVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -47,50 +56,7 @@ public class UserRepository {
 	}
 	
 	public UserVo findByEmailAndPassword(UserVo vo) {
-		UserVo result = null;
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			conn = getConnection();
-			String sql ="select no, name, gender from user where email=? and password = password(?)";
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, vo.getEmail());
-			pstmt.setString(2, vo.getPassword());
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				result = new UserVo();
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String gender = rs.getString(3);
-				
-				result.setNo(no);
-				result.setName(name);
-				result.setGender(gender);
-			}
-			
-		} catch (SQLException e) {
-			throw new UserRepositoryException(e.toString());
-		} finally {
-			try {
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				
-				if(conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
+		return sqlSession.selectOne("user.findByEmailAndPassword", vo);
 	}
 	
 	public UserVo findByNo(Long no) {
