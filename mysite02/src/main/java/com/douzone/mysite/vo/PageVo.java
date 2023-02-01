@@ -5,7 +5,7 @@ public class PageVo {
 	private Long offset=5L;
 	private Long pages;
 //	private Long begin;
-//	private Long end;
+	private Long end;
 	
 	public Long getPages() {
 		return pages;
@@ -40,6 +40,6 @@ public class PageVo {
 //		return page<3L ? 1L : (page+2L < pages ? pages-4L : page-2L);
 //	}
 	public Long getEnd() {
-		return page<3L ? 5L : (page + 2L < pages ? page + 2L : pages );
+		return page<3L ? (pages > 5L ? 5L :pages) : (page + 2L < pages ? page + 2L : pages );
 	}
 }

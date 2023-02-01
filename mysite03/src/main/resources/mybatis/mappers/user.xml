@@ -36,7 +36,6 @@
 	]]>
 			</otherwise>
 		</choose>
-
 	</update>
 
 	<select id="findByNo" resultType="uservo" parameterType="Long">

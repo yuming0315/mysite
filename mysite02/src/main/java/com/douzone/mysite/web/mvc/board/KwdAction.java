@@ -9,23 +9,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mysite.dao.BoardDao;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.PageVo;
 import com.douzone.web.mvc.Action;
+import com.douzone.web.util.WebUtil;
 
 public class KwdAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String kwd = request.getParameter("kwd");
-
+		List<BoardVo> list=null;
+		PageVo pager =new PageVo();
 		if (kwd != null && !"".equals(kwd)) {
-			List<BoardVo> list = new BoardDao().findKwd(request.getParameter("kwdOption"),kwd,
+			 list = new BoardDao().findKwd(request.getParameter("kwdOption"),kwd,
 					request.getParameter("offset"));
 
-			request.setAttribute("search", list);
+			request.setAttribute("list", list);
+			pager.setPages(Long.valueOf(list.size()));
 		}
-
-		response.sendRedirect("/mysite02/board?page="+request.getParameter("page")+
-				"&offset="+request.getParameter("offset"));
+		pager.setPage(request.getParameter("page"));
+		pager.setOffset(request.getParameter("offset"));
+		
+		request.setAttribute("kwd", request.getParameter("kwd"));
+		request.setAttribute("kwdOption", request.getParameter("kwdOption"));
+		request.setAttribute("pager", pager);
+		WebUtil.forward("board/list", request, response);
 	}
 
 }

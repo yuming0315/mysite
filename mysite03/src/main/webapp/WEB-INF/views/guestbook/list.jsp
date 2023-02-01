@@ -22,7 +22,7 @@
 							<td>비밀번호</td><td><input type="password" name="password"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="message" id="content"></textarea></td>
+							<td colspan=4><textarea name="content" id="content"></textarea></td>
 						</tr>
 						<tr>
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
@@ -37,12 +37,12 @@
 							<tr>
 								<td>[${count - status.index}]</td>
 								<td>${vo.name }</td>
-								<td>${vo.reg_date }</td>
+								<td>${vo.regDate }</td>
 								<td><a href="${pageContext.request.contextPath }/guestbook/delete?no=${vo.no }">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>
-									${fn:replace(vo.message, newline, "<br>") }
+									${fn:replace(vo.content, newline, "<br>") }
 								</td>
 							</tr>
 						</table>

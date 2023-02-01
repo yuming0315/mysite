@@ -20,9 +20,6 @@ public class ListAction implements Action {
 		Object obj = request.getAttribute("pager");
 		PageVo pager =(PageVo) (obj==null ? new PageVo() : obj) ;
 
-//		obj = request.getAttribute("search");
-		System.out.println(obj);
-		
 		pager.setPage(request.getParameter("page"));
 		pager.setOffset(request.getParameter("offset"));
 		

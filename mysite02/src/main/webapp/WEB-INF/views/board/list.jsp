@@ -16,23 +16,27 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<c:set var="page" value="${requestScope.pager.page }" />
-				<c:set var="offset" value="${requestScope.pager.offset }" />
-				<c:set var="pages" value="${requestScope.pager.pages }" />
-				<c:set var="alink"
-					value="${pageContext.request.contextPath }/board?offset=${offset }" />
-				<c:set var="link" value="${alink }&page=${page }" />
+
 				<form id="search_form"
 					action="${pageContext.request.contextPath }/board" method="post">
-					<input type="hidden" id="a" name="a" value="kwd"> <input
-						type="hidden" id="page" name="page" value="${page }"> <select
-						id="kwdOption" name="kwdOption" size="1">
+					<!--  <input type="hidden" id="a" name="a" value="kwd"> -->
+					<c:set var="page" value="${requestScope.pager.page }" />
+					<c:set var="offset" value="${requestScope.pager.offset }" />
+					<c:set var="pages" value="${requestScope.pager.pages }" />
+
+					<c:set var="alink"
+						value="${pageContext.request.contextPath }/board?offset=${offset }
+							${(empty requestScope.kwd || requestScope.kwd == '' )? '' : '&a=kwd'}" />
+					<c:set var="link" value="${alink }&page=${page }" />
+
+					<input type="hidden" id="page" name="page" value="${page }">
+					<select id="kwdOption" name="kwdOption" size="1">
 						<option value="title">제목</option>
 						<option value="contents">내용</option>
 						<option value="b.name">저자</option>
-					</select> <input type="text" id="kwd" name="kwd" value=""> <input
-						type="submit" value="찾기">
-
+					</select> <input type="text" id="kwd" name="kwd"
+						value="${requestScope.kwd }"> <input type="submit"
+						value="찾기">
 					<table class="tbl-ex">
 						<tr>
 							<th>번호</th>
@@ -77,7 +81,8 @@
 								</c:forEach>
 							</select>
 							<li><a href="${link }&move=-1">◀</a></li>
-							<c:forEach begin="${requestScope.pager.end - 4}" end="${requestScope.pager.end }" step="1" var="i">
+							<c:forEach begin="${requestScope.pager.end - 4}"
+								end="${requestScope.pager.end }" step="1" var="i">
 								<c:if test="${i>0 }">
 									<li ${i == page ? 'class="selected"':"" }><a
 										href="${alink }&page=${i}">${i }</a></li>

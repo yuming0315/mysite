@@ -1,50 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="guestbook">
-	
-	<insert id="insert" parameterType="uservo">
+
+	<resultMap id="findAllList" type="guestbookvo">
+		<id property="no" column="no" />
+		<result property="name" column="name" />
+		<result property="content" column="message" />
+		<result property="regDate" column="reg_date" />
+	</resultMap>
+
+	<select id="findAll" resultMap="findAllList">
+		<![CDATA[
+		select no, name, message, reg_date
+		 from guestbook 
+		 order by reg_date desc
+		]]>
+	</select>
+
+	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		insert
-		into user
-		values (null, #{name },#{email }, password(#{password }),#{gender },now())
-		 ]]>
+			into guestbook
+			values(null, #{name }, password(#{password }), #{content }, now() )
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<![CDATA[
+		select last_insert_id()
+		]]>
+		</selectKey>
 	</insert>
 
-	<select id="findByEmailAndPassword" resultType="uservo"
-		parameterType="map">
+	<delete id="deleteByNoAndPassword" parameterType="map">
 		<![CDATA[
-		select no, name, gender 
-		 from user 
-		 where email=#{e } and password = password(#{p })
-		 ]]>
-	</select>
+		delete 
+		 from guestbook 
+		 where no = #{no } and password = password(#{password })
+		]]>
+	</delete>
 
-	<update id="update" parameterType="uservo">
-		<choose>
-			<when test='password == ""'>
-		<![CDATA[
-			update user 
-				set name=#{name }, gender=#{gender } 
-				where no = #{no }
-	]]>
-			</when>
-			<otherwise>
-		<![CDATA[
-			update user 
-				set name=#{name }, gender=#{gender }, password=password(#{password }) 
-				where no = #{no }
-	]]>
-			</otherwise>
-		</choose>
-
-	</update>
-
-	<select id="findByNo" resultType="uservo" parameterType="Long">
-		<![CDATA[
-		select no, name, gender 
-		 from user 
-		 where no=${no }
-		 ]]>
-	</select>
 </mapper>

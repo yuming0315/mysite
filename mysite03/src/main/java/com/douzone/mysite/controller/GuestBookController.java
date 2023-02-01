@@ -18,7 +18,7 @@ public class GuestBookController {
 	@Autowired
 	private GuestbookService guestbookservice;
 	
-	@RequestMapping(value={"/list","/*"},method=RequestMethod.GET)
+	@RequestMapping(value={"/list","/"},method=RequestMethod.GET)
 	public String list(Model model) {
 		List<GuestBookVo> list = guestbookservice.getMessageList();
 		model.addAttribute("list",list);
