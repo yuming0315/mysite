@@ -36,9 +36,9 @@ public class PageVo {
 		this.offset = (o == null ? offset : Long.parseLong(o));
 	}
 	
-//	public Long getBegin() {
-//		return page<3L ? 1L : (page+2L < pages ? pages-4L : page-2L);
-//	}
+	public Long getBegin() {
+		return page<3L ? 1L : (page+2L < pages ? pages-4L : page-2L);
+	}
 	public Long getEnd() {
 		return page<3L ? (pages > 5L ? 5L :pages) : (page + 2L < pages ? page + 2L : pages );
 	}

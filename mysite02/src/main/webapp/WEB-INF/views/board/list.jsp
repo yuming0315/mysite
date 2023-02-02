@@ -25,8 +25,7 @@
 					<c:set var="pages" value="${requestScope.pager.pages }" />
 
 					<c:set var="alink"
-						value="${pageContext.request.contextPath }/board?offset=${offset }
-							${(empty requestScope.kwd || requestScope.kwd == '' )? '' : '&a=kwd'}" />
+						value="${pageContext.request.contextPath }/board?offset=${offset }" />
 					<c:set var="link" value="${alink }&page=${page }" />
 
 					<input type="hidden" id="page" name="page" value="${page }">
@@ -81,7 +80,7 @@
 								</c:forEach>
 							</select>
 							<li><a href="${link }&move=-1">◀</a></li>
-							<c:forEach begin="${requestScope.pager.end - 4}"
+							<c:forEach begin="${requestScope.pager.begin}"
 								end="${requestScope.pager.end }" step="1" var="i">
 								<c:if test="${i>0 }">
 									<li ${i == page ? 'class="selected"':"" }><a
