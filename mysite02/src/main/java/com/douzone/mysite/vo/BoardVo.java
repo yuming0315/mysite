@@ -1,7 +1,5 @@
 package com.douzone.mysite.vo;
 
-import java.util.Date;
-
 public class BoardVo {
 	private Long no;
 	private Long user_no;

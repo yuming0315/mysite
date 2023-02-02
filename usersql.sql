@@ -11,15 +11,13 @@ select no,name,email,gender from user where no = ?;
 delete from user where name = 0;
 
 
-
-
-
+select * from guestbook;
 
 
 
 desc board;
 
-select * from board;
+select * from board where title like '%1234%';
 
 select max(g_no) from board as a;
 
@@ -34,7 +32,7 @@ from board as a;
 
 update board set title='yum' where no=1;
 
-delete from board where title="qwer";
+delete from board where no="11";
 
 
 

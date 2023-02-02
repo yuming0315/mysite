@@ -9,15 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.KwdVo;
+import com.douzone.mysite.vo.PageVo;
 
 @Service
 public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
-	
-	private static final int LIST_SIZE = 3; //리스팅되는 게시물의 수
-	private static final int PAGE_SIZE = 3; //페이지 리스트의 페이지 수
-	
+
 	public void addContents(BoardVo vo) {
 		
 	}
@@ -38,22 +37,13 @@ public class BoardService {
 		
 	}
 	
-	public Map<String, Object> getContentsList(int page, String keyword) {
-		int toTalCount = boardRepository.getTotalCount(keyword);
+	public Map<String, Object> getContentsList(PageVo pager, KwdVo kwd,String move) {
+		List<BoardVo> list = boardRepository.findAllByPageAndKeyWord(pager,kwd,move);
 		
-		//1. view에서 게시판 리스트를 렌더링 하기 위한 데이터 값 계산
-		int beginPage = 0;
-		int prevPage = 0;
-		int nextPage = 0;
-		int endPage = 0;
-		
-		//2. 리스트 가져오기
-		List<BoardVo> list = boardRepository.findAllByPageAndKeyWord(page,keyword);
-		
-		//3. 리스트 정보를 맵에 저장
 		Map<String,Object> map = new HashMap<>();
 		map.put("list", list);
-		//map.put("pager", pager);
+		map.put("pager", pager);
+		map.put("kwdVo", kwd);
 		
 		return map;
 	}

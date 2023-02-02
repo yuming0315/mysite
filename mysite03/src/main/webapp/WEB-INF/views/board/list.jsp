@@ -17,11 +17,13 @@
 		<div id="content">
 			<div id="board">
 
-				<c:set var="path" value="${pageContext.request.contextPath }/board" />
+				<c:set var="path" value="${pageContext.request.contextPath }/board/" />
 				<c:set var="page" value="${requestScope.pager.page }" />
 				<c:set var="offset" value="${requestScope.pager.offset }" />
+				<c:set var="kwd" value="${requestScope.kwdVo.kwd }" />
+				<c:set var="kwdOption" value="${requestScope.kwdVo.kwdOption }" />
 
-				<c:set var="alink" value="?offset=${offset }" />
+				<c:set var="alink" value="?offset=${offset }&kwd=${kwd }&kwdOption=${kwdOption }" />
 				<c:set var="link" value="${alink }&page=${page }" />
 				
 				<form id="search_form" action="${path }" method="post">
@@ -30,9 +32,9 @@
 					<select id="kwdOption" name="kwdOption" size="1">
 						<option value="title">제목</option>
 						<option value="contents">내용</option>
-						<option value="b.name">저자</option>
+						<option value="b.name">작성자</option>
 					</select> <input type="text" id="kwd" name="kwd"
-						value="${requestScope.kwd }"> <input type="submit"
+						value="${kwd }"> <input type="submit"
 						value="찾기">
 					<table class="tbl-ex">
 						<tr>
@@ -51,13 +53,13 @@
 									<c:if test="${vo.depth > 0 }">
 										<img
 											src="${pageContext.request.contextPath }/assets/images/reply.png">
-									</c:if> <a href="${link }&a=view&no=${vo.no }">${vo.title }</a>
+									</c:if> <a href="${link }/view?no=${vo.no }">${vo.title }</a>
 								</td>
 								<td>${vo.name }</td>
 								<td>${vo.hit }</td>
 								<td>${vo.regDate }</td>
 								<td><c:if test="${vo.user_no == authUser.no }">
-										<a href="${link }&a=delete&no=${vo.no }" class="del"> <img
+										<a href="${path }delete/${link }&no=${vo.no }" class="del"> <img
 											src="${pageContext.request.contextPath }/assets/images/recycle.png">
 										</a>
 									</c:if></td>
@@ -78,7 +80,7 @@
 								</c:forEach>
 							</select>
 							<li><a href="${path }${link }&move=-1">◀</a></li>
-							<c:forEach begin="${requestScope.pager.end - 4}"
+							<c:forEach begin="${requestScope.pager.begin }"
 								end="${requestScope.pager.end }" step="1" var="i">
 								<c:if test="${i>0 }">
 									<li ${i == page ? 'class="selected"':"" }><a
@@ -92,7 +94,7 @@
 					<c:if test="${not empty authUser }">
 						<div class="bottom">
 							<a
-								href="${pageContext.request.contextPath }/board?a=new-book&page=${page }&offset=${offset}"
+								href="${path }new-book${link }"
 								id="new-book">글쓰기</a>
 						</div>
 					</c:if>

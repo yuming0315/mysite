@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.KwdVo;
+import com.douzone.mysite.vo.PageVo;
 
 @Repository
 public class BoardRepository {
@@ -16,15 +18,16 @@ public class BoardRepository {
 	private SqlSession sqlSession;
 	
 	
-	public List<BoardVo> findAllByPageAndKeyWord(int page, String keyword) {
+	public List<BoardVo> findAllByPageAndKeyWord(PageVo pager, KwdVo kwd,String move) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("page", page);
-		map.put("keyword", keyword);
-		map.put(keyword, map)
-		
-		return sqlSession.selectList("board.findAllByPageAndKeyWord",map);
+		map.put("pager", pager);
+		map.put("kwdVo", kwd);
+		pager.setPages(getTotalCount(kwd));
+		pager.addPage(move);
+		return sqlSession.selectList("board.findByPageAndKeyWord",map);
 	}
-	public int getTotalCount(String keyword) {
-		return sqlSession.selectOne("board.getTotalCount",keyword);
+	
+	public Long getTotalCount(KwdVo kwd) {
+		return sqlSession.selectOne("board.getTotalCount",kwd);
 	}
 }
