@@ -13,6 +13,9 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	
+	<!-- 혹시 모르니 컨테이너에도 하고 여기도 하고 -->
+	<aop:aspectj-autoproxy />
 	<context:annotation-config />
 
 	<!-- Connection Pool DataSource -->
@@ -41,7 +44,7 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	</bean>
 
 	<context:component-scan
-		base-package="com.douzone.mysite.repository,com.douzone.mysite.service,com.douzone.mysite.exception">
+		base-package="com.douzone.mysite.repository,com.douzone.mysite.service,com.douzone.mysite.exception,com.douzone.mysite.aspect">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation"
