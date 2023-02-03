@@ -53,13 +53,13 @@
 									<c:if test="${vo.depth > 0 }">
 										<img
 											src="${pageContext.request.contextPath }/assets/images/reply.png">
-									</c:if> <a href="${link }/view?no=${vo.no }">${vo.title }</a>
+									</c:if> <a href="${path }view?no=${vo.no }&offset=${offset }">${vo.title }</a>
 								</td>
 								<td>${vo.name }</td>
 								<td>${vo.hit }</td>
 								<td>${vo.regDate }</td>
 								<td><c:if test="${vo.user_no == authUser.no }">
-										<a href="${path }delete/${link }&no=${vo.no }" class="del"> <img
+										<a href="${path }delete${link }&no=${vo.no }" class="del"> <img
 											src="${pageContext.request.contextPath }/assets/images/recycle.png">
 										</a>
 									</c:if></td>
