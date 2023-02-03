@@ -37,5 +37,12 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@RequestMapping(value="/view",method=RequestMethod.GET)
+	public String viewGet(Model model,PageVo pager) {
+		Map<String, Object> map = boardService.getContentsList(pager);
+		model.addAllAttributes(map);
+		
+		return "board/list";
+	}
 	
 }
