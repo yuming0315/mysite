@@ -12,7 +12,7 @@
             g_no, o_no, depth,user_no
              from board a join user b
              on a.user_no = b.no
-             order by a.no desc
+             order by g_no desc, o_no asc
              limit ${pager.limit }
    ]]>
 			</when>
@@ -23,7 +23,7 @@
              from board a join user b
              on a.user_no = b.no
              where ${kwdVo.kwdOption} like '%${kwdVo.kwd }%'
-             order by a.no desc
+             order by g_no desc, o_no asc
              limit ${pager.limit }
    ]]>
 			</otherwise>
@@ -51,4 +51,53 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="getContents" parameterType="long"
+		resultType="boardvo">
+	<![CDATA[
+			select a.no no, name,title,hit,contents content,a.reg_date regDate,
+             g_no, o_no, depth,user_no
+             from board a join user b
+             on a.user_no = b.no
+             where a.no = #{_parameter}
+	]]>
+	</select>
+
+	<insert id="addContents" parameterType="boardvo">
+		<![CDATA[
+			insert into board 
+			select null,#{user_no},#{title},#{content},0,sysdate(),ifnull(max(g_no),0)+1,0,0 
+			from board as a
+		]]>
+	</insert>
+
+	<update id="updateContents" parameterType="boardvo">
+	<![CDATA[
+			update board set title=#{title },contents=#{content } where no=#{no }
+		]]>
+	</update>
+
+	<update id="updateOno" parameterType="long">
+	<![CDATA[
+		update board set o_no=o_no+1 where o_no > #{_parameter}
+	]]>
+	</update>
+
+	<insert id="insertReply" parameterType="boardvo">
+		<![CDATA[
+		insert into board values(no,#{user_no},#{title},#{content},0,now(),#{g_no},#{o_no},#{depth})
+		]]>
+	</insert>
+	
+	<delete id="deleteContents" parameterType="boardvo">
+		<![CDATA[
+		delete from board where no = #{no} and user_no = #{user_no}
+		]]>
+	</delete>
+	
+	<update id="updateHit" parameterType="long">
+		<![CDATA[
+		update board set hit=hit+1 where no = #{_parameter}
+		]]>
+	</update>
 </mapper>

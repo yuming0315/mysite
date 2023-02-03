@@ -10,7 +10,7 @@ public class PageVo {
 	public Long getPages() {
 		return pages;
 	}
-	public void setPages(Long count) {
+	public void setMaxPages(Long count) {
 		this.pages = Long.valueOf( (long) Math.ceil(count/(double)offset));
 		if(pages<page) {
 			page = pages;
@@ -47,7 +47,7 @@ public class PageVo {
 	}
 	
 	public Long getBegin() {
-		return page<3L ? 1L : (page+2L < pages ? pages-4L : page-2L);
+		return page<3L ? 1L : (page+2L > pages ? pages-4L : page-2L);
 	}
 	public Long getEnd() {
 		return page<3L ? (pages > 5L ? 5L :pages) : (page + 2L < pages ? page + 2L : pages );

@@ -17,11 +17,13 @@ pageContext.setAttribute("newline", "\n");
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
-		<c:set var="page" value="${param.page }" />
-		<c:set var="offset" value="${param.offset }" />
-		<c:set var="link"
-			value="${pageContext.request.contextPath }/board?&page=${page}&offset=${offset}" />
-
+		
+		<c:set var="offset" value="${requestScope.pager.offset }" />
+		<c:set var="page" value="${requestScope.pager.page }" />
+		<c:set var="link" value="?offset=${offset}" />
+		<c:set var="plink" value="${link }&page=${page }" />
+		<c:set var="path" value="${pageContext.request.contextPath }/board/" />
+		
 		<div id="content">
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
@@ -41,12 +43,12 @@ pageContext.setAttribute("newline", "\n");
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${link }">글목록</a>
+					<a href="${path }${link }">글목록</a>
 					<c:if test="${vo.user_no == authUser.no }">
-						<a href="${link}&a=modify&no=${vo.no}">글수정</a>
+						<a href="${path}modify${plink}&no=${vo.no}">글수정</a>
 					</c:if>
 					<c:if test="${not empty authUser.no }">
-						<a href="${link }&a=replyform&no=${vo.no}">댓글</a>
+						<a href="${path }reply${plink }&no=${vo.no}">댓글</a>
 					</c:if>
 				</div>
 			</div>

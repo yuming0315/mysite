@@ -13,7 +13,7 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
-	
+
 	<!-- 혹시 모르니 컨테이너에도 하고 여기도 하고 -->
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
@@ -42,6 +42,11 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
+	
+	<!-- <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean> -->
 
 	<context:component-scan
 		base-package="com.douzone.mysite.repository,com.douzone.mysite.service,com.douzone.mysite.exception,com.douzone.mysite.aspect">

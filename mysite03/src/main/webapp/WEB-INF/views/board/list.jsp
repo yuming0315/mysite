@@ -53,7 +53,7 @@
 									<c:if test="${vo.depth > 0 }">
 										<img
 											src="${pageContext.request.contextPath }/assets/images/reply.png">
-									</c:if> <a href="${path }view?no=${vo.no }&offset=${offset }">${vo.title }</a>
+									</c:if> <a href="${path }view?no=${vo.no }&offset=${offset }&page=${page }">${vo.title }</a>
 								</td>
 								<td>${vo.name }</td>
 								<td>${vo.hit }</td>
@@ -94,7 +94,7 @@
 					<c:if test="${not empty authUser }">
 						<div class="bottom">
 							<a
-								href="${path }new-book${link }"
+								href="${path }write?page=${page }&offset=${offset }"
 								id="new-book">글쓰기</a>
 						</div>
 					</c:if>

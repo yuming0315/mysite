@@ -15,27 +15,31 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
+			<c:set var="offset" value="${requestScope.pager.offset }" />
+			<c:set var="page" value="${requestScope.pager.page }" />
+			<c:set var="link" value="?offset=${offset}" />
+			<c:set var="path" value="${pageContext.request.contextPath }/board/" />
+			
 				<form class="board-form" method="post" 
-				action="${pageContext.request.contextPath }/board">
-					<input type = "hidden" name = "a" value="update">
-					<input type = "hidden" name = "offset" value=${param.offset } >
-					<input type = "hidden" name = "page" value=${param.page } >
-					<input type = "hidden" name = "no" value=${param.no } >
+				action="${path }modify">
+					<input type = "hidden" name = "offset" value=${offset } >
+					<input type = "hidden" name = "page" value=${page } >
+					<input type = "hidden" name = "no" value=${requestScope.vo.no } >
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
-							<td><input type="text" name="title" value="${vo.title}"></td>
+							<td><input type="text" name="title" value="${requestScope.vo.title}"></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<td><textarea id="content" name="content">${vo.content}</textarea></td>
+							<td><textarea id="content" name="content">${requestScope.vo.content}</textarea></td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=view&offset=${param.offset}&page=${param.page}&no=${param.no}">취소</a> 
+						<a href="${path }view${link }&no=${requestScope.vo.no}">취소</a> 
 						<input type="submit" value="수정">
 					</div>
 				</form>

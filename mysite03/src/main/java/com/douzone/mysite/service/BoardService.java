@@ -18,23 +18,23 @@ public class BoardService {
 	private BoardRepository boardRepository;
 
 	public void addContents(BoardVo vo) {
-		
+		boardRepository.addContents(vo);
 	}
 	
 	public BoardVo getContents(Long no) {
-		return null;
+		return boardRepository.getContents(no);
 	}
 	
-	public BoardVo getContents(Long no,Long userNo) {
-		return null;
+	public void updateHit(Long no) {
+		boardRepository.updateHit(no);
 	}
 	
 	public void updateContents(BoardVo vo) {
-		
+		boardRepository.updateContents(vo);
 	}
 	
-	public void deleteContents(Long no, Long userNo) {
-		
+	public void deleteContents(BoardVo vo) {
+		boardRepository.deleteContents(vo);
 	}
 	
 	public Map<String, Object> getContentsList(PageVo pager, KwdVo kwd,String move) {
@@ -46,5 +46,9 @@ public class BoardService {
 		map.put("kwdVo", kwd);
 		
 		return map;
+	}
+	
+	public void replyContents(BoardVo vo) {
+		boardRepository.replyContents(vo); 
 	}
 }
