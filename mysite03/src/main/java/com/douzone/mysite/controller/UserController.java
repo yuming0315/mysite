@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -71,15 +72,10 @@ public class UserController {
 		return "redirect:/user/joinsuccess";
 	}
 
+	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		// Access Control
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
-		////////////////////////////////////////////////////
-
+	public String update(@AuthUser UserVo authUser, Model model) {
+		
 		UserVo userVo = userService.getUser(authUser.getNo());
 
 		model.addAttribute("userVo", userVo);

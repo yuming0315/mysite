@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.KwdVo;
@@ -86,6 +87,7 @@ public class BoardController {
 		return "board/view";
 	}
 
+	@Auth(role="ADMIN")
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String writeGet(Model model, PageVo pager) {
 		model.addAttribute("pager", pager);

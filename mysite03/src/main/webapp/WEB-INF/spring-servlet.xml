@@ -45,6 +45,15 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- Default Servlet Handler -->
 	<mvc:default-servlet-handler />
 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/assets/**"/>
+			<!-- 이걸 쓰던지 밑의 클래스에서 핸들러 내에서 타입확인을 해서 막던지 -->
+			<bean class="com.douzone.mysite.security.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 	<!-- ViewResolver 설정 -->
 	<bean id='viewResolver'
 		class='org.springframework.web.servlet.view.InternalResourceViewResolver'>
@@ -64,8 +73,8 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 			</list>
 		</property>
 	</bean>
-	
-	
+
+
 	<context:annotation-config />
 	<context:component-scan
 		base-package="com.douzone.mysite.controller" />
