@@ -39,6 +39,11 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 			</bean>
 
 		</mvc:message-converters>
+		
+		<mvc:argument-resolvers>
+			<bean
+				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
 
 	</mvc:annotation-driven>
 
@@ -47,8 +52,20 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.douzone.mysite.security.LoginInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.douzone.mysite.security.LogoutInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/assets/**"/>
+			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/**" />
 			<!-- 이걸 쓰던지 밑의 클래스에서 핸들러 내에서 타입확인을 해서 막던지 -->
 			<bean class="com.douzone.mysite.security.AuthInterceptor" />
 		</mvc:interceptor>

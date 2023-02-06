@@ -20,12 +20,20 @@ public class UserVo {
 	@Length(min=4,max=8)
 	private String password;
 	private String gender;
+	private String role;
 	private String joinDate;
 	public Long getNo() {
 		return no;
 	}
 	public void setNo(Long no) {
 		this.no = no;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getName() {
 		return name;
@@ -59,10 +67,7 @@ public class UserVo {
 	}
 	@Override
 	public String toString() {
-		return "UserDao [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
-				+ gender + ", joinDate=" + joinDate + "]";
+		return "UserVo [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
+				+ gender + ", role=" + role + ", joinDate=" + joinDate + "]";
 	}
-	
-	
-	
 }

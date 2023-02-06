@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.KwdVo;
@@ -94,9 +95,10 @@ public class BoardController {
 		return "board/write";
 	}
 
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String writePost(RedirectAttributes redirect, PageVo pager, BoardVo vo, HttpSession session) {
-		vo.setUser_no(((UserVo) session.getAttribute("authUser")).getNo());
+	public String writePost(RedirectAttributes redirect, PageVo pager, BoardVo vo, @AuthUser UserVo authUser) {
+		vo.setUser_no(authUser.getNo());
 		boardService.addContents(vo);
 		redirect.addFlashAttribute("pager", pager);
 
@@ -126,9 +128,10 @@ public class BoardController {
 		return "board/reply";
 	}
 
+	@Auth
 	@RequestMapping(value = "/reply", method = RequestMethod.POST)
-	public String replyPost(RedirectAttributes redirect, PageVo pager, BoardVo vo, HttpSession session) {
-		vo.setUser_no(((UserVo) session.getAttribute("authUser")).getNo());
+	public String replyPost(RedirectAttributes redirect, PageVo pager, BoardVo vo, @AuthUser UserVo authUser) {
+		vo.setUser_no(authUser.getNo());
 		boardService.replyContents(vo);
 
 		redirect.addFlashAttribute("pager", pager);
@@ -136,9 +139,12 @@ public class BoardController {
 		return "redirect:/board/";
 	}
 
+	@Auth
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deletePost(RedirectAttributes redirect, PageVo pager, BoardVo vo, HttpSession session) {
-		vo.setUser_no(((UserVo) session.getAttribute("authUser")).getNo());
+	public String deletePost(RedirectAttributes redirect, 
+			PageVo pager, BoardVo vo, 
+			@AuthUser UserVo authUser) {
+		vo.setUser_no(authUser.getNo());
 		boardService.deleteContents(vo);
 
 		redirect.addFlashAttribute("pager", pager);

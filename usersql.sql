@@ -1,8 +1,9 @@
 desc user;
 
-insert into user values(no,'hym','gjdbal111@naver.com',password('1234'),'female',now());
+insert into user values(no,'admin','admin',password('admin'),'female',now());
 
 select * from user;
+
 
 select no, name from user where email='gjdbal111@naver.com' and password = password('1234');
 
@@ -13,11 +14,11 @@ delete from user where name = 0;
 
 select * from guestbook;
 
-
+alter table user add column role enum("ADMIN","USER") default "USER" after gender;
 
 desc board;
 
-select * from board where title like '%1234%';
+select * from board;
 
 select max(g_no) from board as a;
 
