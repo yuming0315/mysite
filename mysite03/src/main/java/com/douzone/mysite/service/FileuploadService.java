@@ -18,7 +18,7 @@ public class FileuploadService {
 	private static String URL_PATH = "/assets/upload-images";
 
 	public String restore(MultipartFile multipartFile) {
-		String url = "";
+		String url = null;
 		try {
 			File uploadDirectory = new File(SAVE_PATH);
 			if(!uploadDirectory.exists()) {
@@ -32,7 +32,6 @@ public class FileuploadService {
 			String originFilename = multipartFile.getOriginalFilename();
 			String extName = originFilename.substring(originFilename.lastIndexOf(".") + 1);
 			String saveFilename = generateSaveFilename(extName);
-			Long filesize = multipartFile.getSize();
 
 			byte[] data = multipartFile.getBytes();
 			OutputStream os = new FileOutputStream(SAVE_PATH+"/"+saveFilename);
@@ -59,6 +58,15 @@ public class FileuploadService {
 		filename += ("." + extName);
 
 		return filename;
+	}
+
+	public void removeFile(String url) {
+		File file = new File(url);
+		if(!file.exists()) {
+			return;
+		}
+		
+		file.delete();
 	}
 
 }

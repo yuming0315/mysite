@@ -13,6 +13,7 @@
 		<typeAlias type="com.douzone.mysite.vo.PageVo" alias="pagevo" />
 		<typeAlias type="com.douzone.mysite.vo.KwdVo" alias="kwdvo" />
 		<typeAlias type="com.douzone.mysite.vo.SiteVo" alias="sitevo" />
+		<typeAlias type="com.douzone.mysite.vo.GalleryVo" alias="galleryvo" />
     </typeAliases>	
     
 	<mappers>
@@ -20,5 +21,6 @@
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
 		<mapper resource="mybatis/mappers/site.xml" />
+		<mapper resource="mybatis/mappers/gallery.xml" />
 	</mappers>
 </configuration>

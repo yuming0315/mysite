@@ -42,11 +42,9 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
-	
-	<!-- <bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean> -->
+
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource" /> </bean> -->
 
 	<context:component-scan
 		base-package="com.douzone.mysite.repository,com.douzone.mysite.service,com.douzone.mysite.exception,com.douzone.mysite.aspect">
@@ -57,4 +55,5 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Component" />
 	</context:component-scan>
+
 </beans>

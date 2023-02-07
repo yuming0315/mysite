@@ -60,12 +60,20 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 			<mvc:mapping path="/user/logout" />
 			<bean class="com.douzone.mysite.security.LogoutInterceptor" />
 		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/main/update" />
+			<bean class="com.douzone.mysite.security.SiteUpdateInterceptor" />
+		</mvc:interceptor>
+		
+		
 
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/user/auth" />
 			<mvc:exclude-mapping path="/user/logout" />
 			<mvc:exclude-mapping path="/assets/**" />
+			<mvc:exclude-mapping path="/main/update" />
 			<!-- 이걸 쓰던지 밑의 클래스에서 핸들러 내에서 타입확인을 해서 막던지 -->
 			<bean class="com.douzone.mysite.security.AuthInterceptor" />
 		</mvc:interceptor>
