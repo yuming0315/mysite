@@ -1,6 +1,6 @@
 desc user;
 
-insert into user values(no,'admin','admin',password('admin'),'female',now());
+insert into user values(no,'admin','admin',password('admin'),'female',"ADMIN",now());
 
 select * from user;
 
@@ -35,10 +35,13 @@ update board set title='yum' where no=1;
 
 delete from board where no="11";
 
+desc site;
 
+insert into site values(null,'MySite','안녕하세요. 허유미의 mysite에 오신 것을 환영합니다.
+','/assets/images/profile.jpg','이 사이트는 웹 프로그램밍 실습과제 예제 사이트입니다.\n
+메뉴는 사이트 소개, 방명록, 게시판이 있구요.\n Java 수업 + 데이터베이스 수업 + 웹 프로그래밍 수업 배운 거 있는거 없는 거 다 합쳐서 만들어 놓은 사이트 입니다.');
 
-
-
+select * from site;
 
 
 
