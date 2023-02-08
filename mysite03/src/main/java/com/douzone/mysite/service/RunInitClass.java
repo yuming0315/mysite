@@ -7,6 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
+import com.douzone.mysite.vo.SiteVo;
+
 @Service
 public class RunInitClass implements ApplicationListener<ContextRefreshedEvent> {
 	@Autowired
@@ -17,8 +19,8 @@ public class RunInitClass implements ApplicationListener<ContextRefreshedEvent> 
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		String title = siteService.getSite().getTitle();
-		context.setAttribute("title", title);
+		SiteVo vo = siteService.getSite();
+		context.setAttribute("site", vo);
 	}
 
 }

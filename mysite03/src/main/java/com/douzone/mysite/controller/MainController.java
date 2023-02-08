@@ -17,9 +17,6 @@ public class MainController {
 	
 	@RequestMapping("/")
 	public String index(Model model) {
-		SiteVo site = siteService.getSite();
-		
-		model.addAttribute("site", site);
 		return "main/index";
 	}
 	

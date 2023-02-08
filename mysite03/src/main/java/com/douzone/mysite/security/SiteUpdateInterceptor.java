@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.douzone.mysite.vo.SiteVo;
+
 public class SiteUpdateInterceptor implements HandlerInterceptor {
 	@Autowired
 	ServletContext context;
@@ -17,6 +19,7 @@ public class SiteUpdateInterceptor implements HandlerInterceptor {
 		ModelAndView modelAndView) throws Exception {
 		
 		String title = request.getParameter("title");
-		context.setAttribute("title", title);
+		SiteVo vo = (SiteVo)context.getAttribute("site");
+		vo.setTitle(title);
 	}
 }
