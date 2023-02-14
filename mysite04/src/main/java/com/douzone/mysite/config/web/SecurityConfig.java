@@ -31,6 +31,7 @@ public class SecurityConfig implements WebMvcConfigurer{
 	}
 	
 	//Interceptors
+	//매핑은 없고 인터셉터만 있는 경우, 인터셉터 작동 안할 수 있음
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor()).addPathPatterns("/user/auth");
