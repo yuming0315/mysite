@@ -1,4 +1,4 @@
-package com.douzone.mysite.config.web;
+package com.douzone.mysite.config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,41 +18,23 @@ import com.douzone.mysite.security.SiteUpdateInterceptor;
 
 @SpringBootConfiguration
 public class WebConfig implements WebMvcConfigurer {
-	// Site Interceptor
-//	@Bean
-//	public HandlerInterceptor siteIterceptor() {
-//		return new SiteInterceptor();
-//	}
-
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(siteIterceptor())
-//		.addPathPatterns("/**");
-//	}
-//	
-
 	// Argument Resolver
+	@Bean
+	public HandlerMethodArgumentResolver handlerMethodArgumentResolver() {
+		return new AuthUserHandlerMethodArgumentResolver();
+	}
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(handlerMethodArgumentResolver());
 	}
 
-	@Bean
-	public HandlerMethodArgumentResolver handlerMethodArgumentResolver() {
-		return new AuthUserHandlerMethodArgumentResolver();
-	}
+//	// Site Inteceptor
+//	@Bean
+//	public HandlerInterceptor siteInterceptor() {
+//		return new SiteInterceptor();
+//	}
 
-	// Interceptors
-	// 매핑은 없고 인터셉터만 있는 경우, 인터셉터 작동 안할 수 있음
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor()).addPathPatterns("/user/auth");
-		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/user/logout");
-		registry.addInterceptor(siteUpdateInterceptor()).addPathPatterns("/admin/main/update");
-		registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
-				.excludePathPatterns(Arrays.asList("/user/auth", "/user/logout", "/assets/**", "/main/update"));
-	}
-
+	// Security Interceptors
 	@Bean
 	public HandlerInterceptor loginInterceptor() {
 		return new LoginInterceptor();
@@ -64,13 +46,22 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public HandlerInterceptor siteUpdateInterceptor() {
-		return new SiteUpdateInterceptor();
-	}
-
-	@Bean
 	public HandlerInterceptor authInterceptor() {
 		return new AuthInterceptor();
 	}
 
+	@Bean
+	public HandlerInterceptor siteUpdateInterceptor() {
+		return new SiteUpdateInterceptor();
+	}
+	// Interceptors
+		// 매핑은 없고 인터셉터만 있는 경우, 인터셉터 작동 안할 수 있음
+		@Override
+		public void addInterceptors(InterceptorRegistry registry) {
+			registry.addInterceptor(loginInterceptor()).addPathPatterns("/user/auth");
+			registry.addInterceptor(logoutInterceptor()).addPathPatterns("/user/logout");
+			registry.addInterceptor(siteUpdateInterceptor()).addPathPatterns("/admin/main/update");
+			registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
+					.excludePathPatterns(Arrays.asList("/user/auth", "/user/logout", "/assets/**", "/main/update"));
+		}
 }
