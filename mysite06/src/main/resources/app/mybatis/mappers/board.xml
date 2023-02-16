@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="findByPageAndKeyWord" parameterType="map"
+		resultType="boardvo">
+		<choose>
+			<when test='"".equals(kwdVo.kwd) or kwdVo.kwd == null'>		
+		<![CDATA[
+            select a.no no, name,title,hit,a.reg_date regDate,
+            g_no, o_no, depth,user_no
+             from board a join user b
+             on a.user_no = b.no
+             order by g_no desc, o_no asc
+             limit ${pager.limit }
+   ]]>
+			</when>
+			<otherwise>
+			<![CDATA[
+            select a.no no,name,title,hit,a.reg_date regDate,
+            g_no, o_no, depth,user_no
+             from board a join user b
+             on a.user_no = b.no
+             where ${kwdVo.kwdOption} like '%${kwdVo.kwd }%'
+             order by g_no desc, o_no asc
+             limit ${pager.limit }
+   ]]>
+			</otherwise>
+		</choose>
+
+	</select>
+	<!-- 위에 keyword는 넘겨줄 때 문자열에 % 붙여서 넘기기 아니면 위의방식 limit #{} 계산못함 계산 해서 넘겨줘야함 -->
+
+	<select id="getTotalCount" parameterType="kwdvo"
+		resultType="long">
+		<choose>
+			<when test='kwd == null or kwd.equals("")'>
+			<![CDATA[
+			select count(*)
+			 from board
+			 	]]>
+			</when>
+			<otherwise>
+		<![CDATA[
+			select count(*)
+			 from board a join user b
+			 on a.user_no = b.no
+			 where ${kwdOption } like '%${kwd }%'
+			 		]]>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getContents" parameterType="long"
+		resultType="boardvo">
+	<![CDATA[
+			select a.no no, name,title,hit,contents content,a.reg_date regDate,
+             g_no, o_no, depth,user_no
+             from board a join user b
+             on a.user_no = b.no
+             where a.no = #{_parameter}
+	]]>
+	</select>
+
+	<insert id="addContents" parameterType="boardvo">
+		<![CDATA[
+			insert into board 
+			select null,#{user_no},#{title},#{content},0,sysdate(),ifnull(max(g_no),0)+1,0,0 
+			from board as a
+		]]>
+	</insert>
+
+	<update id="updateContents" parameterType="boardvo">
+	<![CDATA[
+			update board set title=#{title },contents=#{content } where no=#{no }
+		]]>
+	</update>
+
+	<update id="updateOno" parameterType="long">
+	<![CDATA[
+		update board set o_no=o_no+1 where o_no > #{_parameter}
+	]]>
+	</update>
+
+	<insert id="insertReply" parameterType="boardvo">
+		<![CDATA[
+		insert into board values(no,#{user_no},#{title},#{content},0,now(),#{g_no},#{o_no},#{depth})
+		]]>
+	</insert>
+	
+	<delete id="deleteContents" parameterType="boardvo">
+		<![CDATA[
+		delete from board where no = #{no} and user_no = #{user_no}
+		]]>
+	</delete>
+	
+	<update id="updateHit" parameterType="long">
+		<![CDATA[
+		update board set hit=hit+1 where no = #{_parameter}
+		]]>
+	</update>
+</mapper>
