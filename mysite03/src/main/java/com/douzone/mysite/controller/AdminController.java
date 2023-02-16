@@ -34,9 +34,9 @@ public class AdminController {
 	
 	@RequestMapping("")
 	public String main(Model model) {
-		SiteVo vo = siteService.getSite();
+		SiteVo site = applicationContext.getBean(SiteVo.class);
 		
-		model.addAttribute("siteVo",vo);
+		model.addAttribute("site",site);
 		return "admin/main";
 	}
 	
@@ -48,7 +48,7 @@ public class AdminController {
 		SiteVo site = applicationContext.getBean(SiteVo.class);
 
 		siteService.updateSite(vo);
-		servletContext.setAttribute("sitevo", vo);
+//		servletContext.setAttribute("siteVo", vo);
 //		site.setTitle(vo.getTitle());
 //		site.setWelcome(vo.getWelcome());
 //		site.setProfile(vo.getProfile());
