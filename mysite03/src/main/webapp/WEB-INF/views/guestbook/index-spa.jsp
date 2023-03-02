@@ -30,6 +30,23 @@ var render = function(vo, mode) {
 	$("#list-guestbook")[mode? "prepend" : "append"](htmls);
 }
 
+var messageBox = function(title, message, callback) {
+	$("#dialog-message p").text(message);
+	$("#dialog-message")
+		.attr("title", title)
+		.dialog({
+			width: 340,
+			height: 170,
+			modal: true,
+			buttons: {
+				"확인": function() {
+					$(this).dialog('close');
+				}
+			},
+			close: callback
+		});	
+}
+
 	$(function() {
 
 		$("#add-form").submit(function(event) {
@@ -42,8 +59,27 @@ var render = function(vo, mode) {
 			vo.content = $("#tx-content").val();
 
 			/* validation & messagebox */
+			if($("#input-name").val() === ''){
+				messageBox("방명록", "이름이 비어 있습니다.", function(){
+					$("#input-name").focus();
+				});
+				return;
+			}
 			
-
+			if($("#input-password").val() === '') {
+				messageBox("방명록", "비밀번호가 비어 있습니다.", function(){
+					$("#input-password").focus();
+				}); 
+				return;
+			}
+			
+			if($("#tx-content").val() === ''){
+				messageBox("방명록", "내용이 비어 있습니다.", function(){
+					$("#tx-content").focus();
+				});
+				return;
+			}
+			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/guestbook/api",
 				type : "post",
@@ -168,6 +204,9 @@ var render = function(vo, mode) {
 			<div id="dialog-message" title="" style="display: none">
 				<p></p>
 			</div>
+		</div>
+		<div id="dialog-message" title="" style="display:none">
+	  		<p style="line-height:60px"></p>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
 			<c:param name="menu" value="guestbook-ajax" />

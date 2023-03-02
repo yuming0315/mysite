@@ -12,7 +12,7 @@ select no,name,email,gender from user where no = ?;
 delete from user where name = 0;
 
 
-select * from guestbook;
+select * from guestbook order by reg_date desc;
 
 alter table user add column role enum("ADMIN","USER") default "USER" after gender;
 
@@ -48,6 +48,11 @@ select title,welcome,profile,description
 			from site
 			order by no
 			limit 0,1;
+
+desc gallery;
+
+select * from gallery;
+
 
 SET GLOBAL time_zone='+09:00';
 SET time_zone='+09:00';
