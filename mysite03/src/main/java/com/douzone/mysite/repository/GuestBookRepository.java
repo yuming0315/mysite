@@ -22,10 +22,14 @@ public class GuestBookRepository {
 		sqlSession.insert("guestbook.insert",vo);
 	}
 	
-	public void deleteByNoAndPassword(GuestBookVo vo) {
+	public boolean deleteByNoAndPassword(GuestBookVo vo) {
 		Map<String, Object> map = 
 				Map.of("no",vo.getNo(),"password",vo.getPassword());
-		sqlSession.delete("guestbook.deleteByNoAndPassword",map);
+		return sqlSession.delete("guestbook.deleteByNoAndPassword",map)>0;
+	}
+
+	public List<GuestBookVo> findSno(Long startNo) {
+		return sqlSession.selectList("guestbook.findSno",startNo);
 	}
 	
 }

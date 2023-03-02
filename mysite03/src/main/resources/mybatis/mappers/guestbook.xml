@@ -17,6 +17,15 @@
 		]]>
 	</select>
 
+	<select id="findSno" resultMap="findAllList" parameterType="long">
+		<![CDATA[
+		select no, name, message, reg_date
+		 from guestbook 
+		 order by reg_date desc
+		 limit #{long},5
+		]]>
+	</select>
+
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		insert

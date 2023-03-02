@@ -18,15 +18,6 @@ import com.douzone.mysite.security.SiteUpdateInterceptor;
 
 @SpringBootConfiguration
 public class WebConfig implements WebMvcConfigurer {
-	// Argument Resolver
-	@Bean
-	public HandlerMethodArgumentResolver handlerMethodArgumentResolver() {
-		return new AuthUserHandlerMethodArgumentResolver();
-	}
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(handlerMethodArgumentResolver());
-	}
 
 //	// Site Inteceptor
 //	@Bean
