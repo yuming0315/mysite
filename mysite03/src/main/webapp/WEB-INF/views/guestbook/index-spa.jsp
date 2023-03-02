@@ -16,8 +16,6 @@
 	src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-var sno = 0;
-
 var render = function(vo, mode) {
 	var htmls = 
 		"<li data-no='" + vo.no + "'>" +
@@ -142,7 +140,7 @@ var messageBox = function(title, message, callback) {
 		
 		var fetch = function() {
 			$.ajax({
-				url: "${pageContext.request.contextPath}/guestbook/api?sno="+sno,
+				url: "${pageContext.request.contextPath}/guestbook/api?sno="+($("#list-guestbook li").length+5),
 				type: "get",
 				dataType: "json",
 				success: function(response) { 
@@ -156,6 +154,7 @@ var messageBox = function(title, message, callback) {
 					})
 				}
 			});	
+			console.log($("#list-guestbook li").length + 5)
 		}
 		
 		fetch();
@@ -169,7 +168,6 @@ var messageBox = function(title, message, callback) {
 			var scrollTop = $window.scrollTop();
 			
 			if(documentHeight < windowHeight + scrollTop + 10) {
-				sno+=5;
 				fetch();
 			}
 		});
