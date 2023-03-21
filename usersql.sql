@@ -12,7 +12,7 @@ select no,name,email,gender from user where no = ?;
 delete from user where name = 0;
 
 
-select * from guestbook order by reg_date desc;
+select * from guestbook order by reg_date asc;
 
 alter table user add column role enum("ADMIN","USER") default "USER" after gender;
 
@@ -62,3 +62,5 @@ select now();
 select @@global.time_zone, @@session.time_zone,@@system_time_zone;
 
 SELECT sysdate(), @@system_time_zone AS TimeZone;
+
+select * from emaillist
